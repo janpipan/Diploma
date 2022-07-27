@@ -1,0 +1,2 @@
+HA load-balancer https://github.com/kubernetes/kubeadm/blob/main/docs/ha-considerations.md#options-for-software-load-balancing 
+Haproxy http://docs.haproxy.org/2.6/intro.html

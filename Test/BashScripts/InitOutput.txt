@@ -1,0 +1,30 @@
+Your Kubernetes control-plane has initialized successfully!
+
+To start using your cluster, you need to run the following as a regular user:
+
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+Alternatively, if you are the root user, you can run:
+
+  export KUBECONFIG=/etc/kubernetes/admin.conf
+
+You should now deploy a pod network to the cluster.
+Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
+  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+
+You can now join any number of the control-plane node running the following command on each as root:
+
+  kubeadm join 10.177.30.50:8443 --token iq20cy.va3fcdjdj1m5ajhw \
+        --discovery-token-ca-cert-hash sha256:088a17b08d7e2b8319de4ca94e1f1b95a9bf1989383ec7cdd0bceef58024d991 \
+        --control-plane --certificate-key 98afd464d528c4a9c5f1d19266696275cd0a53f637b7c79000a30682b63a206c
+
+Please note that the certificate-key gives access to cluster sensitive data, keep it secret!
+As a safeguard, uploaded-certs will be deleted in two hours; If necessary, you can use
+"kubeadm init phase upload-certs --upload-certs" to reload certs afterward.
+
+Then you can join any number of worker nodes by running the following on each as root:
+
+kubeadm join 10.177.30.50:8443 --token iq20cy.va3fcdjdj1m5ajhw \
+        --discovery-token-ca-cert-hash sha256:088a17b08d7e2b8319de4ca94e1f1b95a9bf1989383ec7cdd0bceef58024d991
