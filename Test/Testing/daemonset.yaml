@@ -8,6 +8,7 @@ spec:
       app: nginx
   template:
     metadata:
+      name: nginx
       labels:
         app: nginx
     spec:
@@ -16,3 +17,19 @@ spec:
         image: nginx:1.14.2
         ports:
         - containerPort: 80
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: "node-role.kubernetes.io/control-plane"
+                operator: In
+                values: 
+                - ""
+      tolerations:
+      - key: "node-role.kubernetes.io/control-plane"
+        operator: "Exists"
+        effect: "NoSchedule"
+      - key: "node-role.kubernetes.io/master"
+        operator: "Exists"
+        effect: "NoSchedule"
