@@ -30,9 +30,10 @@ spec:
           readOnly: true
       hostNetwork: true
       volumes:
-      - hostPath:
-          path: /etc/haproxy/haproxy.cfg
-          type: FileOrCreate
+      - configMap:
+          items:
+          - key: haproxy
+            path: haproxy
         name: haproxyconf
       affinity:
         nodeAffinity:
@@ -50,7 +51,66 @@ spec:
       - key: "node-role.kubernetes.io/master"
         operator: "Exists"
         effect: "NoSchedule"
-
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: keepalived-daemonset
+  namespace: kube-system
+  label:
+    app: keepalived
+spec:
+  selector:
+    matchLabels:
+      app: keepalived
+  template:
+    metadata:
+      name: haproxy
+      namespace: kube-system
+    spec:
+      containers:
+      - image: osixia/keepalived:2.0.17
+        name: keepalived
+        resources: {}
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
+            - NET_BROADCAST
+            - NET_RAW
+        volumeMounts:
+        - mountPath: /usr/local/etc/keepalived/keepalived.conf
+          name: config
+        - mountPath: /etc/keepalived/check_apiserver.sh
+          name: check
+      hostNetwork: true
+      volumes:
+      - configMap:
+          items:
+          - key: keepalived
+            path: keepalived
+        name: config
+      - configMap:
+          items:
+          - key: check-api-server
+            path: check-api-server
+        name: check
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: "node-role.kubernetes.io/control-plane"
+                operator: In
+                values: 
+                - ""
+      tolerations:
+      - key: "node-role.kubernetes.io/control-plane"
+        operator: "Exists"
+        effect: "NoSchedule"
+      - key: "node-role.kubernetes.io/master"
+        operator: "Exists"
+        effect: "NoSchedule"
 
 
         
