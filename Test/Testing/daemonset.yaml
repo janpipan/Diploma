@@ -17,6 +17,17 @@ spec:
         image: nginx:1.14.2
         ports:
         - containerPort: 80
+        volumeMounts:
+        - mountPath: /usr/local/etc/test/
+          name: testconf
+          readOnly: true
+      volumes:
+      - configMap:
+          name: nginx-configmap
+          items:
+          - key: test
+            path: test.txt
+        name: testconf
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:

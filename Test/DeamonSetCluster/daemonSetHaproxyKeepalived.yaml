@@ -3,8 +3,6 @@ kind: DaemonSet
 metadata:
   name: haproxy-daemonset
   namespace: kube-system
-  label:
-    app: haproxy
 spec:
   selector:
     matchLabels:
@@ -13,6 +11,8 @@ spec:
     metadata:
       name: haproxy
       namespace: kube-system
+      labels:
+        app: haproxy
     spec:
       containers:
       - image: haproxy:2.1.4
@@ -25,15 +25,16 @@ spec:
             port: 6443
             scheme: HTTPS
         volumeMounts:
-        - mountPath: /usr/local/etc/haproxy/haproxy.cfg
+        - mountPath: /usr/local/etc/haproxy/
           name: haproxyconf
           readOnly: true
       hostNetwork: true
       volumes:
       - configMap:
+          name: haproxy-keepalived-configmap
           items:
           - key: haproxy
-            path: haproxy
+            path: haproxy.cfg
         name: haproxyconf
       affinity:
         nodeAffinity:
@@ -57,16 +58,16 @@ kind: DaemonSet
 metadata:
   name: keepalived-daemonset
   namespace: kube-system
-  label:
-    app: keepalived
 spec:
   selector:
     matchLabels:
       app: keepalived
   template:
     metadata:
-      name: haproxy
+      name: keepalived
       namespace: kube-system
+      labels:
+        app: keepalived
     spec:
       containers:
       - image: osixia/keepalived:2.0.17
@@ -79,21 +80,23 @@ spec:
             - NET_BROADCAST
             - NET_RAW
         volumeMounts:
-        - mountPath: /usr/local/etc/keepalived/keepalived.conf
+        - mountPath: /usr/local/etc/keepalived/
           name: config
-        - mountPath: /etc/keepalived/check_apiserver.sh
+        - mountPath: /etc/keepalived/
           name: check
       hostNetwork: true
       volumes:
       - configMap:
+          name: haproxy-keepalived-configmap
           items:
           - key: keepalived
-            path: keepalived
+            path: keepalived.conf
         name: config
       - configMap:
+          name: haproxy-keepalived-configmap
           items:
           - key: check-api-server
-            path: check-api-server
+            path: check_apiserver.sh
         name: check
       affinity:
         nodeAffinity:
@@ -111,6 +114,7 @@ spec:
       - key: "node-role.kubernetes.io/master"
         operator: "Exists"
         effect: "NoSchedule"
+
 
 
         

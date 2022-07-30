@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: config-map-test
+  name: haproxy-keepalived-configmap
 data:
-  check_api_server: |
+  check-api-server: |
     #!/bin/sh
 
     errorExit() {
