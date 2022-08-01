@@ -19,3 +19,11 @@ kubeadm init --control-plane-endpoint=10.177.12.50:6443 --apiserver-bind-port 84
 
 
 
+To generate join command for worker nodes run
+kubeadm token create --print-join-command 
+
+To generate join command for master nodes run
+kubeadm init phase upload-certs --upload-certs
+
+To label node run command 
+kubectl label node <node-name> node-role.kubernetes.io/worker=worker
