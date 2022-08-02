@@ -1,18 +1,14 @@
 # Postgress app
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: postgres
 spec:
   selector:
     matchLabels:
       app: postgres
-  strategy:
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
-    type: RollingUpdate
-  replicas: 1
+  replicas: 2
+  serviceName: posgres
   template:
     metadata:
       labels:
@@ -37,10 +33,6 @@ spec:
         volumeMounts:
         - mountPath: /var/lib/postgresql/data
           name: postgredb
-      volumes:
-      - name: postgredb
-        persistentVolumeClaim:
-          claimName: postgres-data
       tolerations:
       - effect: NoExecute
         key: node.kubernetes.io/not-ready
@@ -48,3 +40,14 @@ spec:
       - effect: NoExecute
         key: node.kubernetes.io/unreachable
         tolerationSeconds: 1
+  volumeClaimTemplates:
+  - metadata:
+      name: postgredb
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      storageClassName: longhorn
+      resources:
+        requests:
+          storage: 2Gi
+      

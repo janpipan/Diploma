@@ -13,3 +13,12 @@ kubeadm join 10.177.12.50:6443 --token jia77a.vgj638nvzkwmnh52 --discovery-token
 After you have initialized kuberentes cluster you have to deploy cluster network (flannel, calico...)
 
 When cluster network is deployed you can start adding your nodes to the cluster
+
+
+To immediately schedule new pods on notReady nodes you have to add tolerations to the deployment file. 
+
+
+
+
+
+
