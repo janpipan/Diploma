@@ -1,0 +1,1 @@
+for ha you have to set tolerations to terminate pods faster. 
