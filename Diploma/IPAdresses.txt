@@ -1,0 +1,13 @@
+MasterNode01-vCenter    10.177.86.183    
+MasterNode02-vCenter    10.177.86.179
+MasterNode03-UCS        10.177.86.138
+WorkerNode01-UCS        10.177.86.140
+WorkerNode02-vCenter    10.177.86.137
+WorkerNode03-UCS        10.177.86.139
+
+10.177.12.70-90
+
+KeepAlived-virtual-IP   10.177.12.70
+
+
+

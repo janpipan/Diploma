@@ -2,8 +2,11 @@
 
 #docker installation
 
+#apt update
+#apt install -y docker.io
+
 apt update
-apt install -y docker.io
+
 
 #kubernetes installation
 

@@ -1,0 +1,119 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: haproxy-daemonset
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      app: haproxy
+  template:
+    metadata:
+      name: haproxy
+      namespace: kube-system
+      labels:
+        app: haproxy
+    spec:
+      containers:
+      - image: haproxy:2.1.4
+        name: haproxy
+        livenessProbe:
+          failureThreshold: 8
+          httpGet:
+            host: localhost
+            path: /healthz
+            port: 6443
+            scheme: HTTPS
+        volumeMounts:
+        - mountPath: /usr/local/etc/haproxy/
+          name: haproxyconf
+          readOnly: true
+      hostNetwork: true
+      volumes:
+      - configMap:
+          name: haproxy-keepalived-configmap
+          namespace: kube-system
+          items:
+          - key: haproxy
+            path: haproxy.cfg
+        name: haproxyconf
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: "node-role.kubernetes.io/control-plane"
+                operator: In
+                values: 
+                - ""
+      tolerations:
+      - key: "node-role.kubernetes.io/control-plane"
+        operator: "Exists"
+        effect: "NoSchedule"
+      - key: "node-role.kubernetes.io/master"
+        operator: "Exists"
+        effect: "NoSchedule"
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: keepalived-daemonset
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      app: keepalived
+  template:
+    metadata:
+      name: keepalived
+      namespace: kube-system
+      labels:
+        app: keepalived
+    spec:
+      containers:
+      - image: osixia/keepalived:2.0.17
+        name: keepalived
+        resources: {}
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
+            - NET_BROADCAST
+            - NET_RAW
+        volumeMounts:
+        - mountPath: /usr/local/etc/keepalived/
+          name: config
+        - mountPath: /etc/keepalived/
+          name: check
+      hostNetwork: true
+      volumes:
+      - configMap:
+          name: haproxy-keepalived-configmap
+          namespace: kube-system
+          items:
+          - key: keepalived
+            path: keepalived.conf
+        name: config
+      - configMap:
+          name: haproxy-keepalived-configmap
+          namespace: kube-system
+          items:
+          - key: check-api-server
+            path: check_apiserver.sh
+        name: check
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: "node-role.kubernetes.io/control-plane"
+                operator: In
+                values: 
+                - ""
+      tolerations:
+      - key: "node-role.kubernetes.io/control-plane"
+        operator: "Exists"
+        effect: "NoSchedule"
+      - key: "node-role.kubernetes.io/master"
+        operator: "Exists"
+        effect: "NoSchedule"

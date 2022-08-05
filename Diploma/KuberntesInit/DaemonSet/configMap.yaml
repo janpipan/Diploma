@@ -1,0 +1,86 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: haproxy-keepalived-configmap
+data:
+  check-api-server: |
+    #!/bin/sh
+
+    errorExit() {
+        echo "*** $*" 1>&2
+        exit 1
+    }
+
+    curl --silent --max-time 2 --insecure https://localhost:6443/ -o /dev/null || errorExit "Error GET https://localhost:6443/"
+    if ip addr | grep -q 10.177.12.70; then
+        curl --silent --max-time 2 --insecure https://10.177.12.70:6443/ -o /dev/null || errorExit "Error GET https://10.177.12.70:6443/"
+    fi
+  haproxy: |
+    global
+        log /dev/log local0
+        log /dev/log local1 notice
+        daemon
+
+    defaults
+        mode                    http
+        log                     global
+        option                  httplog
+        option                  dontlognull
+        option http-server-close
+        option forwardfor       except 127.0.0.0/8
+        option                  redispatch
+        retries                 1
+        timeout http-request    10s
+        timeout queue           20s
+        timeout connect         5s
+        timeout client          20s
+        timeout server          20s
+        timeout http-keep-alive 10s
+        timeout check           10s
+
+    frontend apiserver
+        bind *:6443
+        mode tcp
+        option tcplog
+        default_backend apiserver
+
+    backend apiserver
+        option httpchk GET /healthz
+        http-check expect status 200
+        mode tcp
+        option ssl-hello-chk
+        balance     roundrobin
+            server 1 10.177.86.183:8443 check
+            server 2 10.177.86.179:8443 check
+            server 3 10.177.86.138:8443 check
+
+  keepalived: |
+    ! /etc/keepalived/keepalived.conf
+    ! Configuration File for keepalived
+    global_defs {
+        router_id LVS_DEVEL
+    }
+    vrrp_script check_apiserver {
+    script "/etc/keepalived/check_apiserver.sh"
+    interval 3
+    weight -2
+    fall 10
+    rise 2
+    }
+
+    vrrp_instance VI_1 {
+        state MASTER
+        interface ens160
+        virtual_router_id 11
+        priority 21
+        authentication {
+            auth_type PASS
+            auth_pass 11
+        }
+        virtual_ipaddress {
+            10.177.12.70
+        }
+        track_script {
+            check_apiserver
+        }
+    }

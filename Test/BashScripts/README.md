@@ -18,6 +18,18 @@ When cluster network is deployed you can start adding your nodes to the cluster
 To immediately schedule new pods on notReady nodes you have to add tolerations to the deployment file. 
 
 
+Docker installation
+
+docker-ce #installs 
+
+Docker removal
+
+sudo apt-get purge docker-ce docker-ce-cli containerd.io docker-compose-plugin
+
+sudo rm -rf /var/lib/docker
+sudo rm -rf /var/lib/containerd
+
+
 
 
 
