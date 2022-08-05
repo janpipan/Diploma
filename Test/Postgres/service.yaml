@@ -8,6 +8,7 @@ spec:
   type: LoadBalancer
   selector:
     app: mypostgres
+    replicationRole: primary
   ports:
   - protocol: TCP
     port: 5432
