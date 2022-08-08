@@ -1,5 +1,37 @@
 {% extends 'base.html' %}
 
 {% block content %}
-Book list
+
+<h1>Books</h1>
+
+<button><a href="{% url 'add_author' %}">Add new author</a></button>
+<button><a href="{% url 'add_book' %}">Add new book</a></button>
+
+<div class="books-container">
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Pages</th>
+            <th>Rating</th>
+            <th>ISBN</th>
+            <th>Date</th>
+            <th>Author</th>
+        </tr>
+        {% for book in object_list %}
+        <tr>
+            <td>{{book.title}}</td>
+            <td>{{book.total_pages}}</td>
+            <td>{{book.rating}}</td>
+            <td>{{book.isbn}}</td>
+            <td>{{book.date}}</td>
+            <td>{{book.author.name}} {{book.author.last_name}}</td>
+            <td><button><a href="{% url 'delete_book' book.pk %}">Delete</a></button></td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+
+
+
 {% endblock content%}

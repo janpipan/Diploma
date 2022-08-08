@@ -16,13 +16,16 @@ class Author(models.Model):
         return reverse('list_book')
     
 
-class Books(models.Model):
+class Book(models.Model):
     title = models.CharField(max_length=100)
     total_pages = models.IntegerField()
     rating = models.IntegerField()
     isbn = models.CharField(max_length=13)
-    date = models.DateField()
+    date = models.DateField(auto_now_add=True)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
+    
+    def get_absolute_url(self):
+        return reverse('list_book')

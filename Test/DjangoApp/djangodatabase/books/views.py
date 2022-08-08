@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView, CreateView, ListView
-from .models import Books, Author
+from django.views.generic import TemplateView, CreateView, ListView, DeleteView
+from .models import Book, Author
+from django.urls import reverse_lazy
 
 # Create your views here.
 
@@ -9,19 +10,21 @@ class HomePageView(TemplateView):
 
 
 class ListBookView(ListView):
-    model = Books
+    model = Book
     template_name = 'books.html'
 
 class AddBookView(CreateView):
-    model = Books
+    model = Book
     template_name = 'add_book.html'
     fields = ('title', 'total_pages', 'rating', 'isbn', 'author')
 
     def form_valid(self, form):
         return super().form_valid(form)
 
-class DeleteBookView(TemplateView):
+class DeleteBookView(DeleteView):
+    model = Book
     template_name = 'delete_book.html'
+    success_url = reverse_lazy('list_book')
 
 class AddAuthorView(CreateView):
     model = Author
