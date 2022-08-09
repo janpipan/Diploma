@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div>
+    <h1 style="display:inline"><a href="{% url 'list_book' %}">Books</a></h1>
+    <h1 style="display:inline"><a href="{% url 'list_author' %}">Authors</a></h1>
+</div>
+
+
+<button><a href="{% url 'add_author' %}">Add new author</a></button>
+<button><a href="{% url 'add_book' %}">Add new book</a></button>
+
+<div class="books-container">
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Last name</th>
+        </tr>
+        {% for author in object_list %}
+        <tr>
+            <td>{{author.name}}</td>
+            <td>{{author.last_name}}</td>
+            <td><button><a href="{% url 'delete_author' author.pk %}">Delete</a></button></td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+
+
+
+{% endblock content %}

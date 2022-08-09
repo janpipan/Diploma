@@ -13,6 +13,10 @@ class ListBookView(ListView):
     model = Book
     template_name = 'books.html'
 
+class ListAuthorView(ListView):
+    model = Author
+    template_name = 'authors.html'
+
 class AddBookView(CreateView):
     model = Book
     template_name = 'add_book.html'
@@ -33,3 +37,8 @@ class AddAuthorView(CreateView):
 
     def form_valid(self, form):
         return super().form_valid(form)
+
+class DeleteAuthorView(DeleteView):
+    model = Author
+    template_name = 'delete_author.html'
+    success_url = reverse_lazy('list_author')
