@@ -2,7 +2,11 @@
 
 {% block content %}
 
-<h1>Books</h1>
+<div>
+    <h1 style="display:inline">Books</h1>
+    <h1 style="display:inline"><a href="{% url 'list_author' %}">Authors</a></h1>
+</div>
+
 
 <button><a href="{% url 'add_author' %}">Add new author</a></button>
 <button><a href="{% url 'add_book' %}">Add new book</a></button>
@@ -34,4 +38,4 @@
 
 
 
-{% endblock content%}
+{% endblock content %}

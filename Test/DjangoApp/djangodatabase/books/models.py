@@ -13,7 +13,7 @@ class Author(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('list_book')
+        return reverse('list_author')
     
 
 class Book(models.Model):
