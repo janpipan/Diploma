@@ -29,6 +29,9 @@ sudo apt-get purge docker-ce docker-ce-cli containerd.io docker-compose-plugin
 sudo rm -rf /var/lib/docker
 sudo rm -rf /var/lib/containerd
 
+To display taints on node use command 
+    kubectl get nodes -o=jsonpath='{range .items[*]}{.metadata.name}{"\n"}{range .spec.taints[*]}{"\t\t"}{.key}{"\n"}'
+
 
 
 
