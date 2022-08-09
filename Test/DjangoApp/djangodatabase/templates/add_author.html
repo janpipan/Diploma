@@ -4,11 +4,28 @@
 
 {% block content %}
 
-<h1>Add author</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p}}
-    <button class="btn" type="submit">Save</button>
-</form>
+
+<div class="m-2 ms-3">
+
+    <h1>Add New Author</h1>
+
+    <div class="mt-3">
+        <table>
+            <form method="post" id="add_author">
+                {% csrf_token %}
+                {{ form.as_table}}
+            </form>
+        </table>
+        <div class="mt-3"> 
+            <button class="btn btn-dark me-2 pe-3 ps-3" type="submit" form="add_author">Save</button>
+            <a href="{% url 'list_author' %}" class="btn btn-light">Cancel</a>
+        </div>
+    </div>
+
+</div>
+
+
+
+
 
 {% endblock content %}

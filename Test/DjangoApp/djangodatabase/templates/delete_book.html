@@ -2,11 +2,18 @@
 
 {% block content %}
 
-<form method="post">
-    {% csrf_token %}
-    <p>Are you sure you want to delete "{{book.title}}"</p>
-    {{ form.as_p }}
-    <button>Confirm</button>
-</form>
+
+<div class="m-2 ms-3">
+    <h1>Delete Book</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <p>Are you sure you want to delete book {{book.title}} ?</p>
+        {{ form.as_p }}
+        <button class="btn btn-dark me-2 pe-3 ps-3" type="submit">Confirm</button>
+        <a href="{% url 'list_author' %}" class="btn btn-light">Cancel</a>
+    </form>
+</div>
+
 
 {% endblock content%}

@@ -2,30 +2,30 @@
 
 {% block content %}
 
-<div>
-    <h1 style="display:inline"><a href="{% url 'list_book' %}">Books</a></h1>
-    <h1 style="display:inline"><a href="{% url 'list_author' %}">Authors</a></h1>
+<div class>
+    <h1 style="display:inline" class="m-3"><a href="{% url 'list_book' %}" class="text-reset text-decoration-none">Books</a></h1>
+    <h1 style="display:inline" class="m-3 text-decoration-underline">Authors</h1>
 </div>
 
+<a href="{% url 'add_book' %}" class="btn btn-dark m-2 ms-3">Add new book</a></button>
+<a href="{% url 'add_author' %}" class="btn btn-dark m-2">Add new author</a></button>
 
-<button><a href="{% url 'add_author' %}">Add new author</a></button>
-<button><a href="{% url 'add_book' %}">Add new book</a></button>
 
-<div class="books-container">
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Last name</th>
-        </tr>
-        {% for author in object_list %}
-        <tr>
-            <td>{{author.name}}</td>
-            <td>{{author.last_name}}</td>
-            <td><button><a href="{% url 'delete_author' author.pk %}">Delete</a></button></td>
-        </tr>
-        {% endfor %}
-    </table>
-</div>
+
+<table class="table table-dark table-striped text-center">
+    <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Last name</th>
+        <th scope="col">X</th>
+    </tr>
+    {% for author in object_list %}
+    <tr class="align-middle">
+        <td scope="row">{{author.name}} </td>
+        <td>{{author.last_name}} </td>
+        <td><a href="{% url 'delete_author' author.pk %}" class="btn btn-secondary">Delete</a></td>
+    </tr>
+    {% endfor %}
+</table>
 
 
 

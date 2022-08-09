@@ -3,37 +3,36 @@
 {% block content %}
 
 <div>
-    <h1 style="display:inline">Books</h1>
-    <h1 style="display:inline"><a href="{% url 'list_author' %}">Authors</a></h1>
+    <h1 style="display:inline" class="m-3 text-decoration-underline">Books</h1>
+    <h1 style="display:inline" class="m-3"><a href="{% url 'list_author' %}" class="text-reset text-decoration-none">Authors</a></h1>
 </div>
 
 
-<button><a href="{% url 'add_author' %}">Add new author</a></button>
-<button><a href="{% url 'add_book' %}">Add new book</a></button>
+<a href="{% url 'add_book' %}" class="btn btn-dark m-2 ms-3">Add new book</a>
+<a href="{% url 'add_author' %}" class="btn btn-dark m-2">Add new author</a>
 
-<div class="books-container">
-    <table>
-        <tr>
-            <th>Title</th>
-            <th>Pages</th>
-            <th>Rating</th>
-            <th>ISBN</th>
-            <th>Date</th>
-            <th>Author</th>
-        </tr>
-        {% for book in object_list %}
-        <tr>
-            <td>{{book.title}}</td>
-            <td>{{book.total_pages}}</td>
-            <td>{{book.rating}}</td>
-            <td>{{book.isbn}}</td>
-            <td>{{book.date}}</td>
-            <td>{{book.author.name}} {{book.author.last_name}}</td>
-            <td><button><a href="{% url 'delete_book' book.pk %}">Delete</a></button></td>
-        </tr>
-        {% endfor %}
-    </table>
-</div>
+<table class="table table-dark table-striped text-center">
+    <tr>
+        <th scope="col">Title</th>
+        <th scope="col">Pages</th>
+        <th scope="col">Rating</th>
+        <th scope="col">ISBN</th>
+        <th scope="col">Date Added</th>
+        <th scope="col">Author</th>
+        <th scope="col">X</th>
+    </tr>
+    {% for book in object_list %}
+    <tr class="align-middle">
+        <td scope="row">{{book.title}}</td>
+        <td>{{book.total_pages}}</td>
+        <td>{{book.rating}}</td>
+        <td>{{book.isbn}}</td>
+        <td>{{book.date}}</td>
+        <td>{{book.author.name}} {{book.author.last_name}}</td>
+        <td><a href="{% url 'delete_book' book.pk %}" class="btn btn-secondary">Delete</a></button></td>
+    </tr>
+    {% endfor %}
+</table>
 
 
 
