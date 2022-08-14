@@ -2,9 +2,11 @@
 
 {% block content %}
 
-<div class>
+<div>
+    <h1 style="display:inline" class="m-3"><a href="{% url 'home' %}" class="text-reset text-decoration-none">Home</a></h1>
     <h1 style="display:inline" class="m-3"><a href="{% url 'list_book' %}" class="text-reset text-decoration-none">Books</a></h1>
     <h1 style="display:inline" class="m-3 text-decoration-underline">Authors</h1>
+    
 </div>
 
 <a href="{% url 'add_book' %}" class="btn btn-dark m-2 ms-3">Add new book</a></button>
@@ -16,12 +18,14 @@
     <tr>
         <th scope="col">Name</th>
         <th scope="col">Last name</th>
+        <th scope="col">Edit</th>
         <th scope="col">X</th>
     </tr>
     {% for author in object_list %}
     <tr class="align-middle">
         <td scope="row">{{author.name}} </td>
         <td>{{author.last_name}} </td>
+        <td><a href="{% url 'edit_author' author.pk %}" class="btn btn-secondary">Edit</a></td>
         <td><a href="{% url 'delete_author' author.pk %}" class="btn btn-secondary">Delete</a></td>
     </tr>
     {% endfor %}

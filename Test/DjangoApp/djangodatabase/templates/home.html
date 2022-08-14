@@ -4,5 +4,12 @@
 {% endblock title %}
 
 {% block content %}
-<h1>Home Page</h1>
+
+<div>
+    <h1 style="display:inline" class="m-3 text-decoration-underline">Home</h1>
+    <h1 style="display:inline" class="m-3"><a href="{% url 'list_book' %}" class="text-reset text-decoration-none">Books</a></h1>
+    <h1 style="display:inline" class="m-3"><a href="{% url 'list_author' %}" class="text-reset text-decoration-none">Authors</a></h1>
+</div>
+
+
 {% endblock content %}
