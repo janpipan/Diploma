@@ -10,6 +10,7 @@ WorkerNode03-UCS        10.177.86.195
 KeepAlived-virtual-IP   10.177.12.70
 
 metallb 10.177.12.80-90
+djangoApp 10.177.12.90
 
 
 
