@@ -1,5 +1,6 @@
+from re import template
 from django.shortcuts import render
-from django.views.generic import TemplateView, CreateView, ListView, DeleteView
+from django.views.generic import TemplateView, CreateView, ListView, DeleteView, UpdateView
 from .models import Book, Author
 from django.urls import reverse_lazy
 
@@ -42,3 +43,13 @@ class DeleteAuthorView(DeleteView):
     model = Author
     template_name = 'delete_author.html'
     success_url = reverse_lazy('list_author')
+
+class UpdateAuthorView(UpdateView):
+    model = Author
+    template_name = 'update_author.html'
+    success_url = reverse_lazy('list_author')
+
+class UpdateBookView(UpdateView):
+    model = Book
+    template_name = 'update_book.html'
+    success_url = reverse_lazy('list_book')
