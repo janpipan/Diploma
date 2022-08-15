@@ -19,7 +19,7 @@ class Author(models.Model):
 class Book(models.Model):
     title = models.CharField(max_length=100)
     total_pages = models.IntegerField()
-    rating = models.IntegerField()
+    rating = models.FloatField()
     isbn = models.CharField(max_length=13)
     date = models.DateField(auto_now_add=True)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)

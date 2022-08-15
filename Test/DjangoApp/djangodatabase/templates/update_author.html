@@ -8,13 +8,13 @@
 
     <div class="mt-3">
         <table>
-            <form method="post" id="edit_book">
+            <form method="post" id="edit_author">
                 {% csrf_token %}
                 {{ form.as_table }}
             </form>
         </table>
         <div class="mt-3"> 
-            <button class="btn btn-dark me-2 pe-3 ps-3" type="submit" form="add_book">Update</button>
+            <button class="btn btn-dark me-2 pe-3 ps-3" type="submit" form="edit_author">Update</button>
             <a href="{% url 'list_book' %}" class="btn btn-light">Cancel</a>
         </div>
     </div>

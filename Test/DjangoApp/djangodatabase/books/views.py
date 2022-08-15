@@ -47,9 +47,11 @@ class DeleteAuthorView(DeleteView):
 class UpdateAuthorView(UpdateView):
     model = Author
     template_name = 'update_author.html'
+    fields = ('name', 'last_name')
     success_url = reverse_lazy('list_author')
 
 class UpdateBookView(UpdateView):
     model = Book
     template_name = 'update_book.html'
+    fields = ('title', 'total_pages', 'rating', 'isbn', 'date', 'author')
     success_url = reverse_lazy('list_book')
