@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: django
+  labels:
+    app: django
+spec:
+  type: LoadBalancer
+  selector:
+    app: django
+  ports:
+  - name: "http"
+    port: 80
+    targetPort: 8000
+  externalIPs: 
+    - 10.177.12.90

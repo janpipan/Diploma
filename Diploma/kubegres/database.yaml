@@ -1,0 +1,28 @@
+apiVersion: kubegres.reactive-tech.io/v1
+kind: Kubegres
+metadata:
+  name: mypostgres
+  namespace: default
+spec:
+
+   replicas: 3
+   image: postgres:14.1
+
+   database:
+      size: 2Gi
+      # if storage class is not defined, default storage class is used
+      storageClassName: portworx-sc
+      
+
+   env:
+      - name: POSTGRES_PASSWORD
+        valueFrom:
+           secretKeyRef:
+              name: mypostgres-secret
+              key: superUserPassword
+
+      - name: POSTGRES_REPLICATION_PASSWORD
+        valueFrom:
+           secretKeyRef:
+              name: mypostgres-secret
+              key: replicationUserPassword
