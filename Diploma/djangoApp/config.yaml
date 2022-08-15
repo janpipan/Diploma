@@ -100,7 +100,7 @@ data:
         #}
     }
 
-    #DATABASE_ROUTERS = ['djangodatabase.customRouter']
+    #DATABASE_ROUTERS = ['djangodatabase.customRouter.databaseRouter']
 
 
     # Password validation
