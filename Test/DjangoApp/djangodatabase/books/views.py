@@ -53,5 +53,5 @@ class UpdateAuthorView(UpdateView):
 class UpdateBookView(UpdateView):
     model = Book
     template_name = 'update_book.html'
-    fields = ('title', 'total_pages', 'rating', 'isbn', 'date', 'author')
+    fields = ('title', 'total_pages', 'rating', 'isbn', 'author')
     success_url = reverse_lazy('list_book')
