@@ -32,3 +32,11 @@ spec:
           items:
             - key: settings
               path: settings.py
+      tolerations:
+      - effect: NoExecute
+        key: node.kubernetes.io/not-ready
+        tolerationSeconds: 10
+      - effect: NoExecute
+        key: node.kubernetes.io/unreachable
+        tolerationSeconds: 10
+      

@@ -26,3 +26,14 @@ spec:
            secretKeyRef:
               name: mypostgres-secret
               key: replicationUserPassword
+
+   scheduler:
+      tolerations:
+      - effect: NoExecute
+        key: node.kubernetes.io/not-ready
+        tolerationSeconds: 10
+      - effect: NoExecute
+        key: node.kubernetes.io/unreachable
+        tolerationSeconds: 10
+      
+   

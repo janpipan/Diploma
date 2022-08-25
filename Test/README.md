@@ -27,3 +27,7 @@ kubeadm init phase upload-certs --upload-certs
 
 To label node run command 
 kubectl label node <node-name> node-role.kubernetes.io/worker=worker
+
+
+Editing control plane components
+Control plane components can be edited in the /etc/kuberentes/manifests folder. The pods have to be restarted afterwards so that changes can be applied.

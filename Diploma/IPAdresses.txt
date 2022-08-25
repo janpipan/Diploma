@@ -1,9 +1,11 @@
-MasterNode01-vCenter    10.177.86.183    
-MasterNode02-vCenter    10.177.86.179
-MasterNode03-UCS        10.177.86.138
-WorkerNode01-UCS        10.177.86.140
-WorkerNode02-vCenter    10.177.86.137
-WorkerNode03-UCS        10.177.86.195
+MasterNode01-vCenter    10.177.86.211
+MasterNode02-vCenter    10.177.86.204
+MasterNode03-UCS        10.177.86.210
+WorkerNode01-UCS        10.177.86.209
+WorkerNode02-vCenter    10.177.86.205
+WorkerNode03-UCS        10.177.86.208
+WorkerNode04-vCenter    10.177.86.206
+WorkerNode05-vCenter    10.177.86.207
 
 10.177.12.70-90
 

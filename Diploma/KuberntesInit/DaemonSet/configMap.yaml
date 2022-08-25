@@ -50,9 +50,9 @@ data:
         mode tcp
         option ssl-hello-chk
         balance     roundrobin
-            server 1 10.177.86.183:8443 check
-            server 2 10.177.86.179:8443 check
-            server 3 10.177.86.138:8443 check
+            server 1 10.177.86.211:8443 check
+            server 2 10.177.86.204:8443 check
+            server 3 10.177.86.210:8443 check
 
   keepalived: |
     ! /etc/keepalived/keepalived.conf
@@ -70,7 +70,7 @@ data:
 
     vrrp_instance VI_1 {
         state MASTER
-        interface ens160
+        interface ens32
         virtual_router_id 11
         priority 21
         authentication {

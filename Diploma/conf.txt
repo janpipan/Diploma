@@ -1,0 +1,9 @@
+kubeadm init --control-plane-endpoint=10.177.12.70:6443 --apiserver-bind-port 8443 --pod-network-cidr=10.244.0.0/16 --upload-certs
+
+kubeadm join 10.177.12.70:6443 --token d594oi.dk8s1fi4tz6qjaxr \
+        --discovery-token-ca-cert-hash sha256:f3f80e1b149d7cc7c8190182c0ec39d5de7a0a525e614dce445f02e58239ab11
+
+
+kubeadm join 10.177.12.70:6443 --token d594oi.dk8s1fi4tz6qjaxr \
+        --discovery-token-ca-cert-hash sha256:f3f80e1b149d7cc7c8190182c0ec39d5de7a0a525e614dce445f02e58239ab11 \
+        --control-plane --certificate-key 3c5f103c8c7770c9b5864079be780ece34ab05cbc7f6662c940d81277b78f9d2 --apiserver-bind-port 8443
